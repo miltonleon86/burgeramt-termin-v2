@@ -1,0 +1,22 @@
+version: '3.4'
+
+networks:
+  burgeramt:
+
+services:
+  burgeramt_termin_phpfpm:
+    container_name: burgeramt_termin_phpfpm
+    image: burgeramt-termin-worker/phpfpm
+    build:
+      context: .
+      dockerfile: Dockerfile.php
+      cache_from:
+        - burgeramt-termin-worker/phpfpm
+    networks:
+      burgeramt:
+    env_file:
+      - .env
+      - .env.xdebug
+    volumes:
+      - ./:/srv/api:rw,cached
+
